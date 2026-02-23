@@ -1,18 +1,33 @@
 # Eventbrite Lyon
 
-A city-focused event management platform built with Ruby on Rails. Users can create events, browse upcoming events, and register for them. The application includes a full authentication system, payment processing via Stripe, and automated email notifications.
+![Ruby](https://img.shields.io/badge/Ruby-3.4.2-CC342D?style=flat&logo=ruby&logoColor=white)
+![Rails](https://img.shields.io/badge/Rails-8.1.2-CC0000?style=flat&logo=rubyonrails&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.3-7952B3?style=flat&logo=bootstrap&logoColor=white)
+![Devise](https://img.shields.io/badge/Devise-auth-2E3440?style=flat&logo=ruby&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-payments-635BFF?style=flat&logo=stripe&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-Rails%208%20native-5A0FC8?style=flat&logo=pwa&logoColor=white)
+
+A city-focused event management platform built with Ruby on Rails. Users can create events, browse upcoming events, and register for them. The application includes a full authentication system, automated email notifications, and a Progressive Web App (PWA) setup.
 
 ## Features
 
-- Browse all upcoming events on the home page
-- User registration and authentication (Devise)
+### Implemented
+- Browse all upcoming events on the home page (hero + card grid)
+- User registration and authentication (Devise) with Bootstrap-styled forms
 - Create, edit and delete events (title, description, date, duration, price, location)
+- User profile page: display info, list of organized events, edit links
+- Edit profile (first name, last name, description) separately from account credentials
+- Automated email notifications via Action Mailer (Gmail SMTP in production)
+- Progressive Web App (PWA) support via Rails 8 native service worker + manifest
+- Dark theme UI (Bootstrap 5.3.3 CDN)
+- Flash messages (success / error) displayed in the navbar area
+
+### Coming Soon
 - Register for events with payment via Stripe
-- Organizer dashboard: view attendee list per event
-- User profile page (public info + private settings)
-- Automated email notifications via Action Mailer (Gmail SMTP)
-- Admin interface to approve or reject submitted events
+- Organizer dashboard: attendee list per event
 - Image uploads for events and user avatars (Active Storage)
+- Admin interface to approve or reject submitted events
 
 ## Tech Stack
 
@@ -22,8 +37,10 @@ A city-focused event management platform built with Ruby on Rails. Users can cre
 | Framework | Rails 8.1.2 |
 | Database | PostgreSQL |
 | Authentication | Devise |
-| Payments | Stripe |
-| File uploads | Active Storage |
+| UI Framework | Bootstrap 5.3.3 (CDN, dark theme) |
+| PWA | Rails 8 native (service worker + manifest) |
+| Payments | Stripe *(coming soon)* |
+| File uploads | Active Storage *(coming soon)* |
 | Emails | Action Mailer + Gmail SMTP |
 | Dev email preview | letter_opener_web |
 | Environment variables | dotenv-rails |

@@ -13,6 +13,10 @@ class Event < ApplicationRecord
   validate :start_date_cannot_be_in_the_past
   validate :duration_must_be_multiple_of_five
 
+  def end_date
+    start_date + duration.minutes
+  end
+
   private
 
   def start_date_cannot_be_in_the_past

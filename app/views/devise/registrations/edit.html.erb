@@ -1,0 +1,65 @@
+<% content_for :title, "Modifier mon compte" %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card border-secondary mb-4">
+      <div class="card-body p-4">
+        <h2 class="card-title mb-4">Modifier e-mail / mot de passe</h2>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="mb-3">
+            <%= f.label :email, "Adresse e-mail", class: "form-label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                class: "form-control bg-dark text-light border-secondary" %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <small class="text-muted">En attente de confirmation : <%= resource.unconfirmed_email %></small>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, "Nouveau mot de passe", class: "form-label" %>
+            <small class="text-muted d-block mb-1">Laisser vide pour ne pas changer
+              <% if @minimum_password_length %>— <%= @minimum_password_length %> caractères minimum<% end %>
+            </small>
+            <%= f.password_field :password, autocomplete: "new-password",
+                class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password_confirmation, "Confirmer le nouveau mot de passe", class: "form-label" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :current_password, "Mot de passe actuel", class: "form-label" %>
+            <small class="text-muted d-block mb-1">Requis pour confirmer les modifications</small>
+            <%= f.password_field :current_password, autocomplete: "current-password",
+                class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="d-grid mt-4">
+            <%= f.submit "Mettre à jour", class: "btn btn-warning" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card border-danger">
+      <div class="card-body p-4">
+        <h5 class="card-title text-danger">Supprimer mon compte</h5>
+        <p class="text-muted small">Cette action est irréversible. Tous vos événements et participations seront supprimés.</p>
+        <%= button_to "Supprimer mon compte", registration_path(resource_name),
+            data: { turbo_confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" },
+            method: :delete,
+            class: "btn btn-outline-danger btn-sm" %>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <%= link_to "← Retour", :back, class: "text-muted text-decoration-none" %>
+    </div>
+  </div>
+</div>

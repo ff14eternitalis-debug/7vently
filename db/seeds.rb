@@ -7,7 +7,7 @@ puts "Création des utilisateurs..."
 
 alice = User.create!(
   email: "alice@yopmail.com",
-  encrypted_password: "password123",
+  password: "password123",
   first_name: "Alice",
   last_name: "Martin",
   description: "Passionnée de musique et d'art contemporain."
@@ -15,7 +15,7 @@ alice = User.create!(
 
 bob = User.create!(
   email: "bob@yopmail.com",
-  encrypted_password: "password123",
+  password: "password123",
   first_name: "Bob",
   last_name: "Dupont",
   description: "Photographe amateur et grand voyageur."
@@ -23,7 +23,7 @@ bob = User.create!(
 
 charlie = User.create!(
   email: "charlie@yopmail.com",
-  encrypted_password: "password123",
+  password: "password123",
   first_name: "Charlie",
   last_name: "Bernard",
   description: "Fan de cuisine du monde et de randonnée."

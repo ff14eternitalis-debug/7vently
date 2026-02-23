@@ -1,0 +1,43 @@
+<% content_for :title, "Événements à Lyon" %>
+
+<%# Hero %>
+<div class="p-5 mb-4 rounded-3 text-center" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+  <div class="container-fluid py-3">
+    <h1 class="display-5 fw-bold text-warning">Événements à Lyon</h1>
+    <p class="col-md-8 mx-auto fs-5 text-light">Découvrez les meilleurs événements de la ville et rejoignez la communauté.</p>
+    <%= link_to "Créer un événement", new_event_path, class: "btn btn-warning btn-lg mt-2" %>
+  </div>
+</div>
+
+<%# Liste des événements %>
+<% if @events.any? %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% @events.each do |event| %>
+      <div class="col">
+        <div class="card h-100 border-secondary">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="card-title mb-0"><%= event.title %></h5>
+              <span class="badge bg-warning text-dark ms-2"><%= event.price %> €</span>
+            </div>
+            <p class="card-text text-muted small mb-3"><%= truncate(event.description, length: 100) %></p>
+            <ul class="list-unstyled small text-secondary">
+              <li>📅 <%= event.start_date.strftime("%d/%m/%Y à %Hh%M") %></li>
+              <li>⏱️ <%= event.duration %> min</li>
+              <li>📍 <%= event.location %></li>
+              <li>👥 <%= event.attendances.count %> participant(s)</li>
+            </ul>
+          </div>
+          <div class="card-footer bg-transparent border-secondary">
+            <%= link_to "Voir l'événement", event_path(event), class: "btn btn-outline-warning btn-sm w-100" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-5">
+    <p class="text-muted fs-5">Aucun événement pour le moment.</p>
+    <%= link_to "Soyez le premier à en créer un !", new_event_path, class: "btn btn-warning" %>
+  </div>
+<% end %>

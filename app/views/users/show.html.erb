@@ -1,0 +1,50 @@
+<% content_for :title, "#{@user.first_name} #{@user.last_name}" %>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    <%# Carte profil %>
+    <div class="card border-secondary mb-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h2 class="card-title mb-1">
+              <%= @user.first_name.presence || "" %> <%= @user.last_name.presence || "" %>
+            </h2>
+            <p class="text-muted mb-2"><%= @user.email %></p>
+            <% if @user.description.present? %>
+              <p class="card-text"><%= @user.description %></p>
+            <% else %>
+              <p class="text-muted fst-italic">Aucune description renseignée.</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer bg-transparent border-secondary d-flex gap-2">
+        <%= link_to "Modifier email / mot de passe", edit_user_registration_path, class: "btn btn-outline-secondary btn-sm" %>
+        <%= link_to "Modifier le profil", edit_user_path(@user), class: "btn btn-outline-warning btn-sm" %>
+      </div>
+    </div>
+
+    <%# Événements organisés %>
+    <h4 class="mb-3">Mes événements <span class="badge bg-secondary"><%= @organized_events.count %></span></h4>
+
+    <% if @organized_events.any? %>
+      <div class="list-group">
+        <% @organized_events.each do |event| %>
+          <div class="list-group-item list-group-item-action bg-dark border-secondary d-flex justify-content-between align-items-center">
+            <div>
+              <%= link_to event.title, event_path(event), class: "text-warning text-decoration-none fw-semibold" %>
+              <small class="text-muted d-block">📅 <%= event.start_date.strftime("%d/%m/%Y") %> — 📍 <%= event.location %></small>
+            </div>
+            <span class="badge bg-warning text-dark"><%= event.price %> €</span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-muted fst-italic">Vous n'avez pas encore créé d'événement.</p>
+      <%= link_to "Créer votre premier événement", new_event_path, class: "btn btn-warning btn-sm" %>
+    <% end %>
+
+  </div>
+</div>

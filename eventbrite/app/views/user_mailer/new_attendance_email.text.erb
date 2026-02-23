@@ -1,0 +1,13 @@
+Nouvelle inscription à votre événement !
+=========================================
+
+Bonjour <%= @organizer.first_name %>,
+
+<%= @attendee.first_name %> <%= @attendee.last_name %> vient de s'inscrire à votre événement "<%= @event.title %>".
+
+Détails de l'événement :
+- Date : <%= @event.start_date.strftime("%d/%m/%Y à %Hh%M") %>
+- Lieu : <%= @event.location %>
+- Durée : <%= @event.duration %> minutes
+
+Bonne continuation !

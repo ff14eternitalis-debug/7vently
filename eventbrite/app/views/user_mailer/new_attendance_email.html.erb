@@ -1,0 +1,17 @@
+<h1>Nouvelle inscription à votre événement !</h1>
+
+<p>Bonjour <%= @organizer.first_name %>,</p>
+
+<p>
+  <strong><%= @attendee.first_name %> <%= @attendee.last_name %></strong>
+  vient de s'inscrire à votre événement <strong>"<%= @event.title %>"</strong>.
+</p>
+
+<p>Détails de l'événement :</p>
+<ul>
+  <li>Date : <%= @event.start_date.strftime("%d/%m/%Y à %Hh%M") %></li>
+  <li>Lieu : <%= @event.location %></li>
+  <li>Durée : <%= @event.duration %> minutes</li>
+</ul>
+
+<p>Bonne continuation !</p>

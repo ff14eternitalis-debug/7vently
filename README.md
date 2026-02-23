@@ -1,24 +1,141 @@
-# README
+# Eventbrite Lyon
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A city-focused event management platform built with Ruby on Rails. Users can create events, browse upcoming events, and register for them. The application includes a full authentication system, payment processing via Stripe, and automated email notifications.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- Browse all upcoming events on the home page
+- User registration and authentication (Devise)
+- Create, edit and delete events (title, description, date, duration, price, location)
+- Register for events with payment via Stripe
+- Organizer dashboard: view attendee list per event
+- User profile page (public info + private settings)
+- Automated email notifications via Action Mailer (Gmail SMTP)
+- Admin interface to approve or reject submitted events
+- Image uploads for events and user avatars (Active Storage)
 
-* System dependencies
+## Tech Stack
 
-* Configuration
+| Layer | Technology |
+|---|---|
+| Language | Ruby 3.4.2 |
+| Framework | Rails 8.1.2 |
+| Database | PostgreSQL |
+| Authentication | Devise |
+| Payments | Stripe |
+| File uploads | Active Storage |
+| Emails | Action Mailer + Gmail SMTP |
+| Dev email preview | letter_opener_web |
+| Environment variables | dotenv-rails |
 
-* Database creation
+## Database Schema
 
-* Database initialization
+![ERD Diagram](public/Projet%20validant%2024_02_2026%207vently.png)
 
-* How to run the test suite
+### User
+| Column | Type | Notes |
+|---|---|---|
+| `email` | string | not null, default: "" |
+| `encrypted_password` | string | not null, default: "" |
+| `first_name` | string | |
+| `last_name` | string | |
+| `description` | text | |
 
-* Services (job queues, cache servers, search engines, etc.)
+### Event
+| Column | Type | Notes |
+|---|---|---|
+| `title` | string | 5–140 chars |
+| `description` | text | 20–1000 chars |
+| `start_date` | datetime | must be in the future |
+| `duration` | integer | in minutes, multiple of 5 |
+| `price` | integer | in euros, 1–1000 |
+| `location` | string | |
+| `user_id` | integer | foreign key → User (organizer) |
 
-* Deployment instructions
+### Attendance
+| Column | Type | Notes |
+|---|---|---|
+| `stripe_customer_id` | string | Stripe unique customer ID |
+| `user_id` | integer | foreign key → User |
+| `event_id` | integer | foreign key → Event |
 
-* ...
+## Getting Started
+
+### Prerequisites
+
+- Ruby 3.4.2
+- PostgreSQL
+- Bundler
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repo-url>
+cd <repo-name>
+
+# Install dependencies
+bundle install
+
+# Set up environment variables
+cp .env.example .env
+# Then fill in your credentials in .env
+```
+
+### Environment Variables
+
+Create a `.env` file at the root (never commit it — already in `.gitignore`):
+
+```env
+GMAIL_USER_NAME=your.address@gmail.com
+GMAIL_PASSWORD=your_16_char_app_password
+```
+
+> To generate a Gmail App Password: Google Account → Security → 2-Step Verification → App Passwords
+
+### Database Setup
+
+```bash
+rails db:create
+rails db:migrate
+rails db:seed
+```
+
+### Running the App
+
+```bash
+rails server
+```
+
+Visit [http://localhost:3000](http://localhost:3000)
+
+### Email Preview (Development)
+
+Emails are intercepted and stored locally in development. Visit:
+
+```
+http://localhost:3000/letter_opener
+```
+
+## Automated Emails
+
+| Trigger | Recipient | Description |
+|---|---|---|
+| User created | New user | Welcome email |
+| Attendance created | Event organizer | New registration notification |
+
+## Validations
+
+**Event:**
+- `title` — required, 5–140 characters
+- `description` — required, 20–1000 characters
+- `start_date` — required, must be in the future
+- `duration` — required, positive integer, multiple of 5 (minutes)
+- `price` — required, integer between 1 and 1000 (euros)
+- `location` — required
+
+## Production Deployment
+
+SMTP is configured for Gmail in `config/environments/production.rb`. Make sure to set `GMAIL_USER_NAME` and `GMAIL_PASSWORD` as environment variables on your hosting platform.
+
+> **Note:** Gmail is suitable for bootcamp and personal projects. For production-grade apps, consider a dedicated domain with SPF/DKIM configuration.

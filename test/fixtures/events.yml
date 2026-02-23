@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  start_date: 2026-02-23 13:32:38
-  duration: 1
-  price: 1
-  location: MyString
+  title: First Test Event
+  description: This is a detailed description for the first test event on our platform.
+  start_date: 2027-06-01 10:00:00
+  duration: 60
+  price: 20
+  location: Lyon
   user: one
 
 two:
-  title: MyString
-  description: MyText
-  start_date: 2026-02-23 13:32:38
-  duration: 1
-  price: 1
-  location: MyString
+  title: Second Test Event
+  description: This is a detailed description for the second test event on our platform.
+  start_date: 2027-07-01 14:00:00
+  duration: 90
+  price: 50
+  location: Paris
   user: two

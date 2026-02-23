@@ -2,17 +2,17 @@ require "test_helper"
 
 class EventsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get events_index_url
+    get events_url
     assert_response :success
   end
 
   test "should get show" do
-    get events_show_url
+    get event_url(events(:one))
     assert_response :success
   end
 
-  test "should get new" do
-    get events_new_url
-    assert_response :success
+  test "should redirect new to login when not signed in" do
+    get new_event_url
+    assert_redirected_to new_user_session_path
   end
 end

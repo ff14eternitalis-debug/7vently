@@ -5,8 +5,8 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  resources :users, only: [:show, :edit, :update]
-  resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :users, only: [ :show, :edit, :update ]
+  resources :events, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 

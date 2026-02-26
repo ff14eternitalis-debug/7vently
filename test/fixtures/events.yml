@@ -8,6 +8,7 @@ one:
   price: 20
   location: Lyon
   user: one
+  validated: true
 
 two:
   title: Second Test Event
@@ -17,3 +18,4 @@ two:
   price: 50
   location: Paris
   user: two
+  validated: true

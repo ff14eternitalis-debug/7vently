@@ -12,7 +12,9 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    @user.assign_attributes(user_params)
+    @user.admin = params.dig(:user, :admin) == "1"
+    if @user.save
       redirect_to admin_user_path(@user), notice: "Utilisateur mis à jour."
     else
       render :edit, status: :unprocessable_entity
@@ -35,6 +37,6 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :description, :admin)
+    params.require(:user).permit(:first_name, :last_name, :description)
   end
 end

@@ -1,0 +1,19 @@
+<h2>Votre événement n'a pas été retenu ❌</h2>
+
+<p>Bonjour <strong><%= @organizer.first_name.presence || @organizer.email %></strong>,</p>
+
+<p>
+  Nous vous informons que votre événement
+  <strong>« <%= @event.title %> »</strong> n'a malheureusement pas été
+  <strong>validé</strong> par notre équipe de modération.
+</p>
+
+<p>
+  Si vous pensez qu'il s'agit d'une erreur ou si vous souhaitez soumettre
+  un nouvel événement, n'hésitez pas à nous contacter ou à créer un nouvel
+  événement en prenant en compte nos critères de publication.
+</p>
+
+<p>Merci de votre compréhension.</p>
+
+<p>— L'équipe Eventbrite Lyon</p>

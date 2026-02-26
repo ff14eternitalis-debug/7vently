@@ -2,12 +2,18 @@ class Event < ApplicationRecord
   belongs_to :user
   has_many :attendances, dependent: :destroy
   has_many :attendees, through: :attendances, source: :user
+  has_one_attached :photo
+
+  scope :pending_validation, -> { where(validated: nil) }
+  scope :validated_events, -> { where(validated: true) }
+  scope :rejected_events, -> { where(validated: false) }
 
   validates :title, presence: true, length: { minimum: 5, maximum: 140 }
+  validates :photo, presence: true
   validates :description, presence: true, length: { minimum: 20, maximum: 1000 }
   validates :start_date, presence: true
   validates :duration, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
   validates :location, presence: true
 
   validate :start_date_cannot_be_in_the_past
@@ -15,6 +21,10 @@ class Event < ApplicationRecord
 
   def end_date
     start_date + duration.minutes
+  end
+
+  def is_free?
+    price == 0
   end
 
   private

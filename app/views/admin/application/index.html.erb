@@ -1,0 +1,44 @@
+<% content_for :title, "Dashboard Admin" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h2 mb-0">Dashboard <span class="text-warning">Admin</span></h1>
+  <span class="badge bg-warning text-dark fs-6">Connecté en tant qu'administrateur</span>
+</div>
+
+<div class="row g-4">
+  <%# Carte utilisateurs %>
+  <div class="col-md-4">
+    <div class="card border-secondary h-100">
+      <div class="card-body text-center">
+        <div class="display-4 mb-2">👥</div>
+        <h5 class="card-title">Utilisateurs</h5>
+        <p class="text-muted small">Gérer les comptes utilisateurs</p>
+        <%= link_to "Voir les utilisateurs", admin_users_path, class: "btn btn-outline-warning btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+  <%# Carte événements en attente %>
+  <div class="col-md-4">
+    <div class="card border-warning h-100">
+      <div class="card-body text-center">
+        <div class="display-4 mb-2">⏳</div>
+        <h5 class="card-title">Validations en attente</h5>
+        <p class="text-muted small">Approuver ou refuser les nouveaux événements</p>
+        <%= link_to "Voir les soumissions", admin_event_submissions_path, class: "btn btn-warning btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+  <%# Carte événements %>
+  <div class="col-md-4">
+    <div class="card border-secondary h-100">
+      <div class="card-body text-center">
+        <div class="display-4 mb-2">📅</div>
+        <h5 class="card-title">Événements</h5>
+        <p class="text-muted small">Gérer tous les événements du site</p>
+        <%= link_to "Voir les événements", admin_events_path, class: "btn btn-outline-warning btn-sm" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<% content_for :title, "Admin — Modifier #{@event.title}" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Modifier l'événement</h2>
+  <%= link_to "← Retour", admin_event_path(@event), class: "btn btn-outline-secondary btn-sm" %>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card border-secondary">
+      <div class="card-body">
+        <%= form_with model: [:admin, @event], method: :patch do |f| %>
+
+          <% if @event.errors.any? %>
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                <% @event.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= f.label :title, "Titre", class: "form-label" %>
+            <%= f.text_field :title, class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :description, "Description", class: "form-label" %>
+            <%= f.text_area :description, rows: 4, class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :start_date, "Date de début", class: "form-label" %>
+              <%= f.datetime_local_field :start_date, class: "form-control bg-dark text-light border-secondary" %>
+            </div>
+            <div class="col-md-6 mb-3">
+              <%= f.label :duration, "Durée (min)", class: "form-label" %>
+              <%= f.number_field :duration, class: "form-control bg-dark text-light border-secondary", min: 5, step: 5 %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 mb-3">
+              <%= f.label :location, "Lieu", class: "form-label" %>
+              <%= f.text_field :location, class: "form-control bg-dark text-light border-secondary" %>
+            </div>
+            <div class="col-md-4 mb-3">
+              <%= f.label :price, "Prix (€)", class: "form-label" %>
+              <%= f.number_field :price, class: "form-control bg-dark text-light border-secondary", min: 0 %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :validated, "Statut de validation", class: "form-label" %>
+            <%= f.select :validated,
+                [["⏳ En attente", nil], ["✅ Validé", true], ["❌ Refusé", false]],
+                {},
+                class: "form-select bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="d-flex gap-2">
+            <%= f.submit "Enregistrer", class: "btn btn-warning" %>
+            <%= link_to "Annuler", admin_event_path(@event), class: "btn btn-outline-secondary" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

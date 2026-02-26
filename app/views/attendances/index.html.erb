@@ -1,0 +1,65 @@
+<% content_for :title, "Mon espace événement — #{@event.title}" %>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    <%# Header %>
+    <div class="d-flex justify-content-between align-items-start mb-4">
+      <div>
+        <h1 class="mb-1">Mon espace événement</h1>
+        <p class="text-muted mb-0"><%= @event.title %></p>
+      </div>
+      <span class="badge bg-warning text-dark fs-5"><%= @event.price == 0 ? "Gratuit" : "#{@event.price} €" %></span>
+    </div>
+
+    <%# Actions organisateur %>
+    <div class="d-flex gap-2 mb-4">
+      <%= link_to "Modifier l'événement", edit_event_path(@event), class: "btn btn-outline-warning btn-sm" %>
+      <%= link_to "Supprimer l'événement", event_path(@event), data: { turbo_method: :delete, turbo_confirm: "Supprimer cet événement définitivement ?" }, class: "btn btn-outline-danger btn-sm" %>
+      <%= link_to "← Voir la page publique", event_path(@event), class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+
+    <%# Participants %>
+    <div class="card border-secondary">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">👥 Participants</h5>
+        <span class="badge bg-secondary fs-6"><%= @attendances.count %></span>
+      </div>
+      <div class="card-body p-0">
+        <% if @attendances.any? %>
+          <table class="table table-dark table-hover mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Participant</th>
+                <th>Email</th>
+                <th>Inscrit le</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @attendances.each_with_index do |attendance, index| %>
+                <tr>
+                  <td class="text-muted"><%= index + 1 %></td>
+                  <td>
+                    <% if attendance.user.first_name.present? %>
+                      <%= "#{attendance.user.first_name} #{attendance.user.last_name}" %>
+                    <% else %>
+                      <span class="text-muted">—</span>
+                    <% end %>
+                  </td>
+                  <td><%= attendance.user.email %></td>
+                  <td class="text-muted"><%= attendance.created_at.strftime("%d/%m/%Y à %Hh%M") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="text-center text-muted py-5">
+            <p class="mb-0">Aucun participant pour l'instant.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

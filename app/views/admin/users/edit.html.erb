@@ -1,0 +1,56 @@
+<% content_for :title, "Admin — Modifier #{@user.email}" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Modifier l'utilisateur</h2>
+  <%= link_to "← Retour", admin_user_path(@user), class: "btn btn-outline-secondary btn-sm" %>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card border-secondary">
+      <div class="card-body">
+        <%= form_with model: [:admin, @user], method: :patch do |f| %>
+
+          <% if @user.errors.any? %>
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= f.label :first_name, "Prénom", class: "form-label" %>
+            <%= f.text_field :first_name, class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :last_name, "Nom", class: "form-label" %>
+            <%= f.text_field :last_name, class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :description, "Description", class: "form-label" %>
+            <%= f.text_area :description, rows: 3, class: "form-control bg-dark text-light border-secondary" %>
+          </div>
+
+          <div class="mb-4">
+            <div class="form-check form-switch">
+              <%= f.check_box :admin, class: "form-check-input", role: "switch", id: "adminSwitch" %>
+              <%= f.label :admin, "Administrateur", class: "form-check-label text-warning", for: "adminSwitch" %>
+            </div>
+            <small class="text-muted">Accorde l'accès complet au dashboard admin.</small>
+          </div>
+
+          <div class="d-flex gap-2">
+            <%= f.submit "Enregistrer", class: "btn btn-warning" %>
+            <%= link_to "Annuler", admin_user_path(@user), class: "btn btn-outline-secondary" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

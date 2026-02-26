@@ -3,6 +3,11 @@
 <div class="row justify-content-center">
   <div class="col-md-8">
 
+    <%# Photo de l'événement %>
+    <% if @event.photo.attached? %>
+      <%= image_tag @event.photo, class: "img-fluid rounded mb-4 w-100", style: "max-height: 400px; object-fit: cover;" %>
+    <% end %>
+
     <%# Header de l'événement %>
     <div class="d-flex justify-content-between align-items-start mb-4">
       <div>
@@ -64,12 +69,28 @@
       </div>
     </div>
 
-    <%# Actions organisateur %>
+    <%# Actions selon le rôle %>
     <% if user_signed_in? && @event.user == current_user %>
-      <div class="d-flex gap-2">
-        <%= link_to "Modifier", edit_event_path(@event), class: "btn btn-outline-warning btn-sm" %>
-        <%= link_to "Supprimer", event_path(@event), data: { turbo_method: :delete, turbo_confirm: "Supprimer cet événement ?" }, class: "btn btn-outline-danger btn-sm" %>
-      </div>
+      <%# Organisateur %>
+      <%= link_to "Mon espace événement", event_attendances_path(@event), class: "btn btn-warning" %>
+
+    <% elsif user_signed_in? && @event.attendees.include?(current_user) %>
+      <%# Déjà participant %>
+      <span class="badge bg-success fs-6 p-2">✓ Vous participez à cet événement</span>
+
+    <% elsif user_signed_in? %>
+      <%# Connecté mais ni organisateur ni participant %>
+      <%= link_to new_event_attendance_path(@event), class: "btn btn-primary" do %>
+        <% if @event.is_free? %>
+          Rejoindre l'événement (gratuit)
+        <% else %>
+          Rejoindre l'événement — <%= @event.price %> €
+        <% end %>
+      <% end %>
+
+    <% else %>
+      <%# Non connecté %>
+      <%= link_to "Se connecter pour rejoindre", new_user_session_path, class: "btn btn-outline-primary" %>
     <% end %>
 
   </div>

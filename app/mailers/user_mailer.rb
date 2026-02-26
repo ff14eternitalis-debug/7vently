@@ -11,4 +11,16 @@ class UserMailer < ApplicationMailer
     @organizer = @event.user
     mail(to: @organizer.email, subject: "Nouvelle inscription à votre événement : #{@event.title}")
   end
+
+  def event_validated_email(event)
+    @event = event
+    @organizer = event.user
+    mail(to: @organizer.email, subject: "Votre événement « #{@event.title} » a été validé !")
+  end
+
+  def event_rejected_email(event)
+    @event = event
+    @organizer = event.user
+    mail(to: @organizer.email, subject: "Votre événement « #{@event.title} » a été refusé")
+  end
 end

@@ -1,0 +1,11 @@
+Bonjour <%= @organizer.first_name.presence || @organizer.email %>,
+
+Bonne nouvelle ! Votre événement « <%= @event.title %> » a été validé par notre équipe de modération.
+
+Il est désormais visible sur le site et ouvert aux inscriptions.
+
+Date : <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %>
+Lieu : <%= @event.location %>
+
+Merci d'utiliser Eventbrite Lyon !
+— L'équipe Eventbrite Lyon

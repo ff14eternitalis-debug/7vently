@@ -4,7 +4,15 @@
   <div class="col-md-8">
     <h2 class="mb-4">Créer un événement</h2>
 
-    <%= form_with model: @event, class: "needs-validation" do |f| %>
+    <div class="alert alert-warning d-flex gap-2 align-items-start mb-4" role="alert">
+      <span class="fs-5">⏳</span>
+      <div>
+        <strong>Votre événement sera soumis à validation.</strong><br>
+        Il ne sera visible sur le site qu'après approbation par notre équipe de modération. Vous recevrez un email de confirmation.
+      </div>
+    </div>
+
+    <%= form_with model: @event, class: "needs-validation", multipart: true do |f| %>
 
       <% if @event.errors.any? %>
         <div class="alert alert-danger">
@@ -49,6 +57,11 @@
           <%= f.label :location, "Lieu", class: "form-label" %>
           <%= f.text_field :location, class: "form-control bg-dark text-light border-secondary", placeholder: "Adresse ou lieu" %>
         </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :photo, "Photo de l'événement", class: "form-label" %>
+        <%= f.file_field :photo, class: "form-control bg-dark text-light border-secondary", accept: "image/*" %>
       </div>
 
       <div class="d-flex gap-2 mt-4">

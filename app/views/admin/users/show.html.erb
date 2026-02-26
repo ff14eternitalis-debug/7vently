@@ -1,0 +1,52 @@
+<% content_for :title, "Admin — #{@user.email}" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Profil utilisateur</h2>
+  <div class="d-flex gap-2">
+    <%= link_to "Modifier", edit_admin_user_path(@user), class: "btn btn-outline-warning btn-sm" %>
+    <%= link_to "← Liste", admin_users_path, class: "btn btn-outline-secondary btn-sm" %>
+  </div>
+</div>
+
+<div class="card border-secondary">
+  <div class="card-body">
+    <div class="d-flex gap-4 align-items-center mb-4">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "rounded-circle flex-shrink-0", width: 80, height: 80, style: "object-fit: cover;" %>
+      <% else %>
+        <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=<%= @user.email %>" width="80" height="80" class="rounded-circle flex-shrink-0" alt="Avatar">
+      <% end %>
+      <div>
+        <h4 class="mb-1"><%= @user.first_name.presence || "" %> <%= @user.last_name.presence || "" %></h4>
+        <p class="text-muted mb-1"><%= @user.email %></p>
+        <% if @user.admin? %>
+          <span class="badge bg-warning text-dark">Administrateur</span>
+        <% else %>
+          <span class="badge bg-secondary">Utilisateur</span>
+        <% end %>
+      </div>
+    </div>
+
+    <dl class="row">
+      <dt class="col-sm-3 text-muted">Description</dt>
+      <dd class="col-sm-9"><%= @user.description.presence || "Aucune description." %></dd>
+
+      <dt class="col-sm-3 text-muted">Inscrit le</dt>
+      <dd class="col-sm-9"><%= @user.created_at.strftime("%d/%m/%Y à %H:%M") %></dd>
+
+      <dt class="col-sm-3 text-muted">Événements organisés</dt>
+      <dd class="col-sm-9"><%= @user.organized_events.count %></dd>
+
+      <dt class="col-sm-3 text-muted">Participations</dt>
+      <dd class="col-sm-9"><%= @user.attendances.count %></dd>
+    </dl>
+  </div>
+
+  <% unless @user == current_user %>
+    <div class="card-footer bg-transparent border-secondary">
+      <%= button_to "Supprimer ce compte", admin_user_path(@user), method: :delete,
+          data: { turbo_confirm: "Supprimer définitivement #{@user.email} ?" },
+          class: "btn btn-danger btn-sm" %>
+    </div>
+  <% end %>
+</div>

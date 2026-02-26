@@ -4,10 +4,13 @@ class EventsController < ApplicationController
   before_action :correct_user, only: [ :edit, :update, :destroy ]
 
   def index
-    @events = Event.all.order(start_date: :asc)
+    @events = Event.validated_events.order(start_date: :asc)
   end
 
   def show
+    unless @event.validated? || organizer_or_admin?
+      redirect_to root_path, alert: "Cet événement est en attente de validation ou n'est pas disponible."
+    end
   end
 
   def new
@@ -50,7 +53,11 @@ class EventsController < ApplicationController
     redirect_to root_path, alert: "Accès non autorisé." unless @event.user == current_user
   end
 
+  def organizer_or_admin?
+    user_signed_in? && (current_user == @event.user || current_user.admin?)
+  end
+
   def event_params
-    params.require(:event).permit(:title, :description, :start_date, :duration, :price, :location)
+    params.require(:event).permit(:title, :description, :start_date, :duration, :price, :location, :photo)
   end
 end

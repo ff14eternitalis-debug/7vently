@@ -1,0 +1,20 @@
+<h2>Bonne nouvelle ! Votre événement a été validé ✅</h2>
+
+<p>Bonjour <strong><%= @organizer.first_name.presence || @organizer.email %></strong>,</p>
+
+<p>
+  Nous avons le plaisir de vous informer que votre événement
+  <strong>« <%= @event.title %> »</strong> a été <strong>validé</strong>
+  par notre équipe de modération.
+</p>
+
+<p>Il est désormais visible sur le site et ouvert aux inscriptions.</p>
+
+<p>
+  📅 Date : <%= @event.start_date.strftime("%d/%m/%Y à %H:%M") %><br>
+  📍 Lieu : <%= @event.location %>
+</p>
+
+<p>Merci d'utiliser Eventbrite Lyon !</p>
+
+<p>— L'équipe Eventbrite Lyon</p>
